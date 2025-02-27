@@ -10,6 +10,15 @@ export default function TodoList() {
 		trpc.addTodo.mutationOptions({ onSettled: () => todos.refetch() })
 	);
 
+	const generateTodoList = () => {
+		for (let i = 0; i < 50; i++) {
+			addTodo.mutate({
+				titulo: `Tarefa ${i}`,
+				descricao: `Descrição da tarefa ${i}`,
+			});
+		}
+	};
+
 	return (
 		<>
 			<div className="todo-list">
@@ -31,37 +40,56 @@ export default function TodoList() {
 			</div>
 
 			<div className="side-bar">
-				<h1>Criar nova tarefa</h1>
-				<form
-					className="create-form"
-					onSubmit={(e) => {
-						e.preventDefault();
-						const formData = new FormData(
-							e.target as HTMLFormElement
-						);
-						const titulo = formData.get("titulo") as string;
-						const descricao = formData.get("descricao") as string;
-						addTodo.mutate({ titulo, descricao });
-					}}
-				>
-					<label>
+				<div className="side-bar-inner">
+					<h1>Criar nova tarefa</h1>
+					<form
+						className="create-form"
+						onSubmit={(e) => {
+							e.preventDefault();
+							const formData = new FormData(
+								e.target as HTMLFormElement
+							);
+							const titulo = formData.get("titulo") as string;
+							const descricao = formData.get(
+								"descricao"
+							) as string;
+							addTodo.mutate({ titulo, descricao });
+						}}
+					>
+						<label>
+							<input
+								placeholder="Título"
+								name="titulo"
+								className="title-input"
+								required
+							/>
+							<span className="required-icon">*</span>
+						</label>
 						<input
-							placeholder="Título"
-							name="titulo"
-							className="title-input"
-							required
+							placeholder="Descrição"
+							name="descricao"
+							className="description-input"
 						/>
-						<span className="required-icon">*</span>
-					</label>
-					<input
-						placeholder="Descrição"
-						name="descricao"
-						className="description-input"
-					/>
-					<button type="submit" className="create-todo-button">
-						Criar
-					</button>
-				</form>
+						<button type="submit" className="create-todo-button">
+							Criar
+						</button>
+					</form>
+
+					<div className="add-randoms-container">
+						<h1>Criar tarefas aleatórias</h1>
+						<p className="todo-description">
+							Clique no botão abaixo para criar 50 tarefas
+							aleatórias para visualizar a listagem dinâmica
+							(scroll infinito)
+						</p>
+						<button
+							className="add-randoms-button"
+							onClick={generateTodoList}
+						>
+							Gerar
+						</button>
+					</div>
+				</div>
 			</div>
 		</>
 	);
