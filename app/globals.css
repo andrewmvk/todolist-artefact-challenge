@@ -110,7 +110,8 @@ label {
 	width: calc(100vw - 380px);
 	margin-left: 380px;
 	display: flex;
-	justify-content: center;
+	flex-direction: column;
+	gap: 20px;
 	padding: 2.5rem;
 }
 
@@ -121,6 +122,17 @@ label {
 	padding: 20px;
 }
 
+.todo-title {
+	margin-bottom: 10px;
+}
+
 .todo-description {
 	color: #888888;
+	margin-bottom: 15px;
+}
+
+.todo-date-id {
+	font-size: 0.9rem;
+	text-align: right;
+	width: 100%;
 }

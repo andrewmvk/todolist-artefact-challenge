@@ -22,9 +22,9 @@ export default function TodoList() {
 						<div key={todo.id} className="todo-container">
 							<h1 className="todo-title">{todo.titulo}</h1>
 							<p className="todo-description">{todo.descricao}</p>
-							<span>
+							<div className="todo-date-id">
 								Criado em: {todoDate} - ID: {todo.id}
-							</span>
+							</div>
 						</div>
 					);
 				})}
@@ -32,7 +32,18 @@ export default function TodoList() {
 
 			<div className="side-bar">
 				<h1>Criar nova tarefa</h1>
-				<form action="/" className="create-form">
+				<form
+					className="create-form"
+					onSubmit={(e) => {
+						e.preventDefault();
+						const formData = new FormData(
+							e.target as HTMLFormElement
+						);
+						const titulo = formData.get("titulo") as string;
+						const descricao = formData.get("descricao") as string;
+						addTodo.mutate({ titulo, descricao });
+					}}
+				>
 					<label>
 						<input
 							placeholder="Título"
