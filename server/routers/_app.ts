@@ -32,9 +32,28 @@ const generateUniqueId = (): number => {
 };
 
 export const appRouter = createTRPCRouter({
-	todoList: publicProcedure.query(async () => {
-		return todos;
-	}),
+	todoList: publicProcedure
+		.input(
+			z.object({
+				limit: z.number().min(1).max(30).nullish(),
+				cursor: z.number().nullish(),
+			})
+		)
+		.query(async (opts) => {
+			const { input } = opts;
+			const limit = input.limit ?? 30;
+			const { cursor } = input;
+			const pageStart = cursor ?? 0;
+
+			const paginatedTodos = todos.slice(pageStart, pageStart + limit);
+
+			let nextCursor: typeof cursor | undefined = undefined;
+			if (todos.length > pageStart + limit) {
+				nextCursor = pageStart + limit;
+			}
+
+			return { paginatedTodos, nextCursor };
+		}),
 	addTodo: publicProcedure
 		.input(
 			z.object({ titulo: z.string(), descricao: z.string().optional() })
