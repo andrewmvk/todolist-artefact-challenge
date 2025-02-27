@@ -1,6 +1,6 @@
 "use client";
 
-import { useTRPC } from "@/utils/trpc"; // client trpc
+import { useTRPC } from "@/utils/providers/TrpcProvider";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 export default function TodoList() {
@@ -22,6 +22,7 @@ export default function TodoList() {
 	return (
 		<>
 			<div className="todo-list">
+				{!todos.data ? <h2>Loading...</h2> : null}
 				{todos.data?.map((todo) => {
 					const todoDate = new Intl.DateTimeFormat("pt-BR", {
 						dateStyle: "short",

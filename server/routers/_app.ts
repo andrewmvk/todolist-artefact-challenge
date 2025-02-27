@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { procedure, router } from "../trpc";
+import { createTRPCRouter, publicProcedure } from "../trpc";
 
 interface Todo {
 	id: number;
@@ -31,11 +31,11 @@ const generateUniqueId = (): number => {
 	return newId;
 };
 
-export const appRouter = router({
-	todoList: procedure.query(async () => {
+export const appRouter = createTRPCRouter({
+	todoList: publicProcedure.query(async () => {
 		return todos;
 	}),
-	addTodo: procedure
+	addTodo: publicProcedure
 		.input(
 			z.object({ titulo: z.string(), descricao: z.string().optional() })
 		)

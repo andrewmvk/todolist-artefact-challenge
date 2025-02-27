@@ -1,11 +1,16 @@
-import Image from "next/image";
-import styles from "./page.module.css";
 import TodoList from "./components/TodoList";
+import { getQueryClient, trpc } from "@/server/ssr-caller";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
-export default function Home() {
+export default async function Home() {
+	const queryClient = getQueryClient();
+	void queryClient.prefetchQuery(trpc.todoList.queryOptions());
+
 	return (
 		<div>
-			<TodoList />
+			<HydrationBoundary state={dehydrate(queryClient)}>
+				<TodoList />
+			</HydrationBoundary>
 		</div>
 	);
 }
