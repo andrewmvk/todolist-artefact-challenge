@@ -1,42 +1,126 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+	--background: #ffffff;
+	--foreground: #171717;
+	--todos-border: #333333;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+	:root {
+		--background: #0a0a0a;
+		--foreground: #ededed;
+		--todos-border: #eaeaea;
+	}
 }
 
 html,
 body {
-  max-width: 100vw;
-  overflow-x: hidden;
+	max-width: 100vw;
+	overflow-x: hidden;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	color: var(--foreground);
+	background: var(--background);
+	font-family: Arial, Helvetica, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 * {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+	color: inherit;
+	text-decoration: none;
+}
+
+input,
+button {
+	appearance: none;
+	all: unset;
 }
 
 @media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+	html {
+		color-scheme: dark;
+	}
+}
+
+label {
+	position: relative;
+}
+
+.side-bar {
+	position: fixed;
+	left: 0;
+	top: 0;
+	height: 100vh;
+	border-right: 1px solid hsl(0, 0%, 12%);
+	padding: 2.5rem 2rem;
+
+	h1 {
+		margin-bottom: 20px;
+	}
+}
+
+.create-form {
+	display: flex;
+	flex-direction: column;
+}
+
+.title-input,
+.description-input {
+	width: 300px;
+	font-size: 1rem;
+	padding: 10px;
+	background-color: #1a1a1a;
+	border-radius: 5px;
+}
+
+.title-input::placeholder,
+.description-input::placeholder {
+	color: #8f8f8f;
+}
+
+.description-input {
+	margin-top: 10px;
+}
+
+.required-icon {
+	position: absolute;
+	right: 10px;
+	bottom: 10px;
+}
+
+.create-todo-button {
+	background-color: #1b3354;
+	color: #0072f5;
+	border: 1px solid #0072f5;
+	padding: 10px;
+	border-radius: 10px;
+	text-align: center;
+	margin-top: 20px;
+	cursor: pointer;
+}
+
+.todo-list {
+	width: calc(100vw - 380px);
+	margin-left: 380px;
+	display: flex;
+	justify-content: center;
+	padding: 2.5rem;
+}
+
+.todo-container {
+	max-width: 380px;
+	border: 1px solid var(--todos-border);
+	border-radius: 10px;
+	padding: 20px;
+}
+
+.todo-description {
+	color: #888888;
 }
