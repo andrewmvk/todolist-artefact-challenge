@@ -2,6 +2,8 @@ import { initTRPC } from "@trpc/server";
 import { cache } from "react";
 import { ZodError } from "zod";
 
+// código de exemplo mínimo da documentação do TRPC (https://trpc.io/docs/client/tanstack-react-query/server-components)
+
 export const createTRPCContext = cache(async () => {
 	/**
 	 * @see: https://trpc.io/docs/server/context

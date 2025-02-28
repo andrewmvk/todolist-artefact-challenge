@@ -3,6 +3,9 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { TRPCReactProvider } from "@/utils/providers/TrpcProvider";
 
+// principais configurações do layout do site, normalmente utilizado para definição de fontes e componentes repetitivos como header e footer ou até providers
+// está sendo utilizado neste caso para envolver todo o site em um provider do TRPC
+
 const geistSans = localFont({
 	src: "./fonts/GeistVF.woff",
 	variable: "--font-geist-sans",

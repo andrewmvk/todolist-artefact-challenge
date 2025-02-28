@@ -1,12 +1,15 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
+// neste arquivo, encontra-se a implementação de um CRUD de tarefas utilizando o TRPC,
+// segue o exemplo mínimo para este arquivo: https://trpc.io/docs/client/tanstack-react-query/server-components
+
 interface Todo {
 	id: number;
 	titulo: string;
 	descricao?: string;
 	dataCriacao: Date;
-}
+} // Interface descrevendo a tipagem do objeto de uma tarefa
 
 const todos: Todo[] = [];
 
@@ -16,12 +19,13 @@ const defaultTodo: Todo = {
 	descricao:
 		"Essa é uma tarefa de teste, um exemplo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum pellentesque ligula ipsum, vitae mollis massa imperdiet eget. Ut at risus a sem dapibus condimentum sed sit amet nisi.",
 	dataCriacao: new Date(),
-};
+}; // esta é uma tarefa de exemplo adicionada manualmente (hardcoded) para fins de teste
 
 todos.push(defaultTodo);
 
 const generateUniqueId = (): number => {
 	// gera um id aleatório (número inteiro) que, caso não esteja em uso, aloca-o para a nova tarefa
+	// é uma forma simples de gerar um id de forma aleatória e baixa probabilidade de colisão (em casos de poucas tarefas)
 
 	let newId: number;
 	do {
@@ -31,6 +35,8 @@ const generateUniqueId = (): number => {
 	return newId;
 };
 
+// este é o procedimento público que será utilizado para realizar as operações de CRUD de tarefas
+// ele é exportado para ser utilizado nos arquivos: "ssr-caller.tsx" e no "TrpcProvider.tsx"
 export const appRouter = createTRPCRouter({
 	todoList: publicProcedure
 		.input(
