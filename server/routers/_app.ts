@@ -59,6 +59,10 @@ export const appRouter = createTRPCRouter({
 			z.object({ titulo: z.string(), descricao: z.string().optional() })
 		)
 		.mutation(async ({ input }) => {
+			if (input.titulo === "") {
+				throw new Error("Tarefa não pode ser criada sem um título.");
+			}
+
 			const newTodo: Todo = {
 				id: generateUniqueId(),
 				titulo: input.titulo,
@@ -67,6 +71,35 @@ export const appRouter = createTRPCRouter({
 			};
 			todos.push(newTodo);
 			return newTodo;
+		}),
+	removeTodo: publicProcedure
+		.input(z.object({ id: z.number() }))
+		.mutation(async ({ input }) => {
+			const index = todos.findIndex((todo) => todo.id === input.id);
+			if (index === -1) {
+				throw new Error("Tarefa não encontrada.");
+			}
+
+			const removedTodo = todos.splice(index, 1)[0];
+			return removedTodo;
+		}),
+	editTodo: publicProcedure
+		.input(
+			z.object({
+				id: z.number(),
+				titulo: z.string(),
+				descricao: z.string().optional(),
+			})
+		)
+		.mutation(async ({ input }) => {
+			const index = todos.findIndex((todo) => todo.id === input.id);
+			if (index === -1) {
+				throw new Error("Tarefa não encontrada.");
+			}
+
+			todos[index].titulo = input.titulo;
+			todos[index].descricao = input.descricao;
+			return todos[index];
 		}),
 });
 
