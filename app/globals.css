@@ -134,13 +134,18 @@ label {
 	color: #e7eb00;
 }
 
-.todo-list {
+.todo-list-container {
+	position: relative;
+	padding: 2.5rem;
 	width: calc(100vw - 420px);
 	margin-left: 420px;
+}
+
+.todo-list {
+	width: 100%;
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
-	padding: 2.5rem;
 }
 
 .todo-container {
@@ -228,4 +233,35 @@ label {
 .edit-todo-button:hover {
 	border-width: 1px;
 	border-style: solid;
+}
+
+.feedback-container {
+	position: fixed;
+	right: 50%;
+	bottom: 20px;
+	transform: translateX(50%);
+	padding: 20px;
+	border-radius: 40px;
+	color: #5aff1f;
+	width: fit-content;
+	overflow: hidden;
+	background: #113614;
+}
+
+.feedback-container.error {
+	color: #ff1f1f;
+	background: #361111;
+}
+
+.feedback-container {
+	animation: feedback 3s forwards cubic-bezier(1, 0, 0.6, 1);
+}
+
+@keyframes feedback {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
 }

@@ -41,7 +41,7 @@ export const appRouter = createTRPCRouter({
 		)
 		.query(async (opts) => {
 			const { input } = opts;
-			const limit = input.limit ?? 30;
+			const limit = input.limit ?? 15;
 			const { cursor } = input;
 			const pageStart = cursor ?? 0;
 
